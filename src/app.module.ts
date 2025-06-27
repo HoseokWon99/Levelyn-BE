@@ -5,16 +5,13 @@ import { typeormOptionsFactory, typeormDataSourceFactory } from "./config/typeor
 import { RedisModule } from "./config/redis";
 import { HttpModule } from "@nestjs/axios";
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import { RandomModule } from "./config/random";
 import { UsersModule } from './users';
-import { AuthModule } from './auth';
-import { SkillsModule } from './skills';
-import { ItemsModule } from './items';
-import { ToDoModule } from './to-do';
+import { PlayersModule } from './players';
 import { WalletsModule } from './wallets';
-import { DashboardsModule } from './dashboards';
-import { InventoryModule } from './inventory';
-import { RewardsModule } from './rewards';
-import { StatsModule } from './stats/stats.module';
+import { AuthModule } from './auth';
+import { ToDoModule } from "./to-do";
+import { InventoryModule } from "./inventory";
 import yamlConfig from "./config/yaml";
 import { join } from "node:path";
 
@@ -30,19 +27,16 @@ import { join } from "node:path";
           dataSourceFactory: typeormDataSourceFactory,
           inject: [ConfigService]
       }),
-      RedisModule.forRootAsync(),
       HttpModule.register({ global: true }),
       EventEmitterModule.forRoot({ global: true }),
+      RedisModule,
+      RandomModule,
       UsersModule,
-      AuthModule,
-      SkillsModule,
-      ItemsModule,
-      ToDoModule,
+      PlayersModule,
       WalletsModule,
-      DashboardsModule,
-      InventoryModule,
-      RewardsModule,
-      StatsModule
+      AuthModule,
+      ToDoModule,
+      InventoryModule
   ]
 })
 export class AppModule {}

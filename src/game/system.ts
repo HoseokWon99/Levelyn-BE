@@ -1,0 +1,32 @@
+export const MAX_EXP
+    = Symbol("GAME_MAX_EXP");
+
+export const REGION_INTERVAL
+    = Symbol("GAME_REGION_INTERVAL");
+
+export const DELTA_ATTACK_PER_LEVEL_UP
+    = Symbol("GAME_DELTA_ATTACK_PER_LEVEL_UP");
+
+export const DELTA_WILL_PER_LEVEL_UP
+    = Symbol("GAME_DELTA_WILL_PER_LEVEL_UP");
+
+export const MIN_COIN_REWARD
+    = Symbol('GAME_MIN_COIN_REWARD');
+
+export const TILE_EXP_REWARD
+    = Symbol('GAME_TILE_EXP_REWARD');
+
+export const BATTLE_EXP_REWARD
+    = Symbol("GAME_BATTLE_EXP_REWARD");
+
+export const ITEM_REWARD_PROBABILITY
+    = Symbol('GAME_ITEM_REWARD_PROBABILITY');
+
+export const BATTLE_EVENT_PROBABILITY
+    = Symbol("GAME_BATTLE_EVENT_PROBABILITY");
+
+export const BATTLE_ITEM_REWARD_PROBABILITY
+    = Symbol("GAME_BATTLE_ITEM_REWARD_PROBABILITY");
+
+export const BATTLE_COIN_REWARD_PROBABILITY
+    = Symbol("GAME_BATTLE_COIN_REWARD_PROBABILITY");

@@ -9,7 +9,7 @@ export function typeormOptionsFactory(config: ConfigService): TypeOrmModuleOptio
         username: config.get<string>("DB_USERNAME")!,
         password: config.get<string>("DB_PASSWORD")!,
         database: config.get<string>("DB_DATABASE")!,
-        entities: [__dirname + '/**/*.model{.ts,.js}'],
+        entities: [__dirname + '/../../**/*.model{.ts,.js}'],
         logging: true
     };
 }

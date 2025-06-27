@@ -1,12 +1,22 @@
-import { ApiProperty, ApiSchema, OmitType } from "@nestjs/swagger";
+import { ApiExtraModels, ApiProperty, ApiSchema, OmitType } from "@nestjs/swagger";
 
 @ApiSchema()
-export class UserItemSchema {
+export class ItemTypeSchema {
     @ApiProperty({ name: "id", type: "integer" })
     id: number;
 
-    @ApiProperty({ name: "type", type: "string" })
-    type: string;
+    @ApiProperty({ name: "value", type: "string" })
+    value: string;
+}
+
+@ApiExtraModels(ItemTypeSchema)
+@ApiSchema()
+export class PlayerItemSchema {
+    @ApiProperty({ name: "id", type: "integer" })
+    id: number;
+
+    @ApiProperty({ name: "type", type: ItemTypeSchema })
+    type: ItemTypeSchema;
 
     @ApiProperty({ name: "name", type: "string", description: "아이템명" })
     name: string;
@@ -19,7 +29,7 @@ export class UserItemSchema {
 }
 
 @ApiSchema()
-export class UserSkillSchema {
+export class PlayerSkillSchema {
     @ApiProperty({ name: "id", type: "integer" })
     id: number;
 
@@ -34,4 +44,4 @@ export class UserSkillSchema {
 }
 
 @ApiSchema()
-export class SkillSchema extends OmitType(UserSkillSchema, ["equipped"]) {}
+export class SkillSchema extends OmitType(PlayerSkillSchema, ["equipped"]) {}

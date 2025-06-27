@@ -5,7 +5,7 @@ import { GoalDTO } from "../dto";
 
 @Entity("goals")
 export class Goal extends ModelBase<GoalDTO> {
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     @PrimaryColumn({ name: "user_id", type: "integer" })
     userId: number;
 

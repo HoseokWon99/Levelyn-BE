@@ -1,2 +1,2 @@
-export * from "./user.items.service";
-export * from "./user.skills.service";
+export * from "./player.items.service";
+export * from "./player.skills.service";

@@ -3,6 +3,8 @@
 /node_modules
 /build
 
+/data
+
 # Logs
 logs
 *.log
@@ -46,6 +48,7 @@ lerna-debug.log*
 # connect to ec2
 levelyn-ec2.pem
 levelyn-ec2.sh
+levelyn-deploy.sh
 
 # temp directory
 .temp

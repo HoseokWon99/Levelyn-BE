@@ -3,9 +3,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { ToDoPeriodDTO, ToDoPeriodUnit } from "../dto";
 import { Exclude } from "class-transformer";
 
-@Entity("to-do-repeat")
+@Entity("to_do_periods")
 export class ToDoPeriod extends ModelBase<ToDoPeriodDTO> {
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     @PrimaryGeneratedColumn()
     id: number;
 

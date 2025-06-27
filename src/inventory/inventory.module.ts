@@ -1,27 +1,27 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserItem, UserSkill } from "./model";
-import { Skill, SkillsModule, SkillsService } from "../skills";
+import { PlayerItem, PlayerSkill } from "./model";
 import { AuthModule, JwtAuthGuard } from "../auth";
-import { UserItemsService, UserSkillsService } from "./service";
-import { UserItemsController, UserSkillsController } from "./controller";
+import { PlayerItemsService, PlayerSkillsService } from "./service";
+import { PlayerItemsController, PlayerSkillsController } from "./controller";
 import { InventoryListener } from "./inventory.listener";
+import { GameModule, Skill, SkillsService } from "../game";
 
-const EXTERNAL_PROVIDERS = [SkillsService, JwtAuthGuard];
+const EXTERNAL_PROVIDERS = [JwtAuthGuard, SkillsService];
 
 @Module({
   imports: [
-      TypeOrmModule.forFeature([UserItem, UserSkill, Skill]),
-      SkillsModule,
-      AuthModule
+      TypeOrmModule.forFeature([PlayerItem, PlayerSkill, Skill]),
+      AuthModule,
+      GameModule
   ],
   providers: [
       ...EXTERNAL_PROVIDERS,
-      UserItemsService,
-      UserSkillsService,
+      PlayerItemsService,
+      PlayerSkillsService,
       InventoryListener
   ],
-  controllers: [UserItemsController, UserSkillsController],
-  exports: [UserItemsService, UserSkillsService]
+  controllers: [PlayerItemsController, PlayerSkillsController],
+  exports: [PlayerItemsService, PlayerSkillsService]
 })
 export class InventoryModule {}

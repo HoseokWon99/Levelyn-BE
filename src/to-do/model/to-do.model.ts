@@ -10,11 +10,11 @@ export class ToDo extends ModelBase<ToDoDTO> {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     @Column({ name: "user_id", type: "integer" })
     userId: number;
 
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     @Column({ name: "period_id", type: "integer", nullable: true })
     periodId: number | null;
 
@@ -30,7 +30,7 @@ export class ToDo extends ModelBase<ToDoDTO> {
     @Column({ type: "boolean", default: false })
     completed: boolean;
 
-    @Exclude()
+    @Exclude({ toPlainOnly: true })
     @OneToOne(() => ToDoPeriod, { onDelete: "CASCADE", onUpdate: "CASCADE" })
     @JoinColumn({ name: "period_id" })
     period: ToDoPeriod | null;

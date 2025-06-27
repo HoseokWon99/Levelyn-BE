@@ -1,10 +1,10 @@
-import { Controller, ForbiddenException, Get, Inject, Logger, Res, Headers, UseGuards } from '@nestjs/common';
-import { AuthService } from "../service/auth.service";
-import { JWT_REFRESH_EXPIRES } from "../../config/jwt";
+import {Controller, ForbiddenException, Get, Inject, Logger, Res, Headers, UseGuards } from '@nestjs/common';
+import { AuthService } from "../service";
+import { JWT_REFRESH_EXPIRES } from "../token"
 import { Cookies, User } from "../../common";
 import { SignInDTO } from "../dto";
 import { Response } from "express";
-import { AuthGuard } from "@nestjs/passport";
+import { KakaoOAuth2Guard } from "../../config/oauth2";
 
 @Controller('/api/auth')
 export class AuthController {
@@ -18,20 +18,19 @@ export class AuthController {
     ) {}
 
     @Get("/sign-in")
-    @UseGuards(AuthGuard("oidc"))
+    @UseGuards(KakaoOAuth2Guard)
     async signIn(
         @User() dto: SignInDTO,
         @Res({ passthrough: true }) res: Response
     ) {
-        const { refreshToken, ...rest } = await this._authService.signIn(dto);
+        const { accessToken, refreshToken, player, wallet } = await this._authService.signIn(dto);
 
         res.cookie(
-            "REFRESH_TOKEN",
-            refreshToken,
+            "REFRESH_TOKEN", refreshToken,
             { httpOnly: true, maxAge: this._refreshExpires }
         );
 
-        return rest;
+        return { accessToken, player, wallet };
     }
 
     @Get("/sign-out")
