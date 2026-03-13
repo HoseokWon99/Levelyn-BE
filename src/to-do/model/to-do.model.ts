@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ModelBase } from "../../common";
 import { ToDoPeriod } from "./to-do.period.model";
 
@@ -16,7 +16,9 @@ export class ToDo extends ModelBase {
     @Column({ type: "varchar" })
     description: string;
 
-    @Column({ type: "date" })
+    @Column({
+        type: "date"
+    })
     date: Date;
 
     @Column({ name: "is_sub", type: "boolean", default: false })
@@ -28,7 +30,5 @@ export class ToDo extends ModelBase {
     @OneToOne(() => ToDoPeriod, { eager: true, onDelete: "CASCADE", cascade: ["insert", "update"] })
     @JoinColumn({ name: "period_id" })
     period: ToDoPeriod | null;
-
-
 }
 

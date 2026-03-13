@@ -25,7 +25,8 @@ export class NotificationsService {
             __makeStreamKey(event.userId),
             "MAXLEN", "~", this._maxLength,
             "*",
-            "data", JSON.stringify(event),
+            "topic", event.topic,
+            "data", JSON.stringify(event.data),
         );
         if (!streamId) throw Error(`Failed to add notification ${event}`);
         this._logger.debug(`Added to stream ${streamId}`);
@@ -33,28 +34,29 @@ export class NotificationsService {
     }
 
     getUserNotifications(userId: number, lastId?: string): Observable<Notification> {
-       return from(this.generateFromStream(__makeStreamKey(userId), lastId ?? "$"));
+        // Use a real timestamp ID instead of "$" so polling retries don't miss
+        // messages added during the block timeout window.
+        const startId = lastId ?? `${Date.now()}-0`;
+        return from(this.generateFromStream(__makeStreamKey(userId), startId));
     }
 
     private async* generateFromStream(
         streamKey: string,
         offsetId: string,
     ): AsyncIterableIterator<Notification> {
-        // Step 1: Catch up on missed messages (if reconnecting)
-        if (offsetId !== "$") {
-            this._logger.debug(`Catching up from ${offsetId}`);
+        // Step 1: Catch up on missed messages (covers both new connections and reconnects).
+        // Uses exclusive range so the lastId message itself is not replayed.
+        this._logger.debug(`Catching up from ${offsetId}`);
+        const missed = await this._redis.xrange(
+            streamKey,
+            `(${offsetId}`,
+            "+",
+            "COUNT", 100,
+        );
 
-            const missed = await this._redis.xrange(
-                streamKey,
-                offsetId,
-                "+",
-                "COUNT", 100,
-            );
-
-           if (missed.length) {
-               yield* missed.map(__parseNotification);
-               offsetId = missed.at(-1)!![0];
-           }
+        if (missed.length) {
+            yield* missed.map(__parseNotification);
+            offsetId = missed.at(-1)!![0];
         }
 
         // Step 2: Stream new messages with blocking read
@@ -63,14 +65,14 @@ export class NotificationsService {
                 const result = await this._redis.xread(
                     "BLOCK", this._timeout,
                     "STREAMS", streamKey,
-                   offsetId,
+                    offsetId,
                 );
 
                 if (!result || result.length === 0) continue; // Timeout, no messages - continue loop
                 const [_, messages] = result[0];
 
                 if (messages.length) {
-                    yield *messages.map(__parseNotification);
+                    yield* messages.map(__parseNotification);
                     offsetId = messages.at(-1)!![0];
                 }
             }

@@ -2,12 +2,9 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci
-
 COPY . .
+RUN npm ci
 RUN npm run build
-
 
 FROM node:22-alpine AS runner
 
@@ -21,6 +18,7 @@ COPY .env ./
 COPY game.system.yaml ./
 
 ENV NODE_ENV=production
+ENV TZ=Asia/Seoul
 
 EXPOSE 3000
 

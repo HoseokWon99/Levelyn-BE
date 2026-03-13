@@ -78,4 +78,4 @@ Notifications are pushed via SSE at `/api/notifications`. The `SseInterceptor` w
 The codebase uses **`@fxts/core`** for functional utilities (`pipe`, `map`, `filter`, etc.) and **`neverthrow`** for Result types in some services.
 
 ## Planning Rule
-After make plan, save plan as ${plan-name}.md under .claude/plans
+After make plan, save plan as ${plan-name}.md under .claude/plans  

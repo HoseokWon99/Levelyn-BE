@@ -3,6 +3,7 @@ import { IsNotPast } from "../../../../common";
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import { ToDoPeriodSchema } from "./schema";
 import { Transform, Type } from "class-transformer";
+import { Logger } from "@nestjs/common";
 
 @ApiExtraModels(ToDoPeriodSchema)
 export class CreateToDoBody {
@@ -13,7 +14,10 @@ export class CreateToDoBody {
 
     @ApiProperty({ type: Date, description: "실행일", required: true })
     @IsNotPast()
-    @Transform(({ value }) => new Date(value))
+    @Transform(({ value }) => {
+        Logger.debug(value, CreateToDoBody.name);
+        return new Date(value);
+    })
     date: Date;
 
     @ApiProperty({ type: "boolean", description: "하위 할 일 여부", required: false })

@@ -8,6 +8,16 @@
       "env": {
         "MYSQL_CONNECTION_STRING": "mysql://test:0000@localhost:3306/levelyn"
       }
+    },
+    "redis": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "redis-mcp-server@latest",
+        "redis-mcp-server",
+        "--url",
+        "redis://localhost:6379/0"
+      ]
     }
   }
 }

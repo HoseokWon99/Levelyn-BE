@@ -9,7 +9,6 @@ import { Transactional } from "typeorm-transactional";
 import { isDayToDo } from "./service.internal";
 import { GoalsService } from "./goals.service";
 import { excludeTimestamp, excludeTimestampOnly } from "../../common";
-import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ToDoFulfilledEvent } from "../event";
 import { EventBus } from "@nestjs/cqrs";
 
@@ -22,15 +21,14 @@ export class ToDoService {
        private readonly _toDoRepos: Repository<ToDo>,
        @Inject(forwardRef(() => GoalsService))
        private readonly _goalsService: GoalsService,
-       @Inject(EventEmitter2)
-       private readonly _eventEmitter: EventEmitter2,
        @Inject(EventBus)
        private readonly _eventBus: EventBus,
     ) { }
 
     @Transactional()
     async createToDo(dto: CreateToDoDTO): Promise<void> {
-        const toDo = await this._toDoRepos.save(dto);
+        this._logger.debug(dto.date instanceof Date);
+        const toDo: ToDo = await this._toDoRepos.save(dto);
         toDo.isSub && await this._goalsService.onUpsertSubToDo(toDo.userId, toDo);
     }
 
