@@ -22,6 +22,7 @@ import { RewardsModule } from "./rewards";
 import { NotificationsModule } from "./notifications";
 import { MyPagesModule } from "./my-pages";
 import { BattlesModule } from "./battles";
+import { MonitoringModule } from "./monitoring";
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { BattlesModule } from "./battles";
       TilesModule,
       BattlesModule,
       RewardsModule,
-      NotificationsModule
+      NotificationsModule,
+      MonitoringModule
   ],
   controllers: [AppController],
 })
