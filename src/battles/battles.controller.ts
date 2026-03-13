@@ -2,11 +2,12 @@ import { Controller, Inject, Logger, Param, Sse, UseInterceptors } from "@nestjs
 import { BattlesService } from "./service";
 import { ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
 import { SseInterceptor } from "../common";
+import { SseMonitoringInterceptor } from "../monitoring";
 import { catchError } from "rxjs";
 
 @ApiTags("Battles")
 @Controller("/api/battles")
-@UseInterceptors(SseInterceptor)
+@UseInterceptors(SseInterceptor, SseMonitoringInterceptor)
 export class BattlesController {
     private readonly _logger: Logger = new Logger(BattlesController.name);
 

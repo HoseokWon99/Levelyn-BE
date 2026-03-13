@@ -8,6 +8,7 @@ import { NotificationsService } from "./service";
 import { UserNotification } from "./notification";
 import { SSE_HEARTBEAT_PERIOD } from "./token";
 import { NotificationsInterceptor } from "./notifications.interceptor";
+import { SseMonitoringInterceptor } from "../monitoring";
 
 @ApiTags("Notifications")
 @Controller('/api/notifications')
@@ -25,7 +26,7 @@ export class NotificationsController {
     @ApiOperation({ summary: "sse endpoint" })
     @ApiQuery({ type: AuthQuerySchema, required: true })
     @ApiOkResponse({ type: NotificationSchema })
-    @UseInterceptors(SseInterceptor, NotificationsInterceptor)
+    @UseInterceptors(SseInterceptor, NotificationsInterceptor, SseMonitoringInterceptor)
     notifyUser(@User("id") userId: number): Observable<NotificationSchema> {
 
         const heartbeat$ = interval(this._heartbeatPeriod)
