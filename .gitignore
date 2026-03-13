@@ -52,6 +52,7 @@ levelyn-ec2.sh
 levelyn-proxy-ec2.sh
 sse-test.sh
 test-battle.sh
+connect-db.sh
 
 # temp directory
 .temp
