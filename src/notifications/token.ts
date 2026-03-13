@@ -3,3 +3,9 @@ export const NOTIFICATION_BLOCK_TIMEOUT
 
 export const SSE_HEARTBEAT_PERIOD
     = Symbol("SSE_HEARTBEAT_PERIOD");
+
+export const STREAM_MAX_LENGTH
+    = Symbol("STREAM_MAX_LENGTH");
+
+export const NOTIFICATION_LOOP_DELAY
+    = Symbol("NOTIFICATION_LOOP_DELAY");

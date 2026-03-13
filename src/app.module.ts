@@ -22,7 +22,6 @@ import { RewardsModule } from "./rewards";
 import { NotificationsModule } from "./notifications";
 import { MyPagesModule } from "./my-pages";
 import { BattlesModule } from "./battles";
-import { MonitoringModule } from "./monitoring";
 
 @Module({
   imports: [
@@ -53,7 +52,6 @@ import { MonitoringModule } from "./monitoring";
       BattlesModule,
       RewardsModule,
       NotificationsModule,
-      MonitoringModule
   ],
   controllers: [AppController],
 })
