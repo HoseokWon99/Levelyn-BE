@@ -13,6 +13,7 @@ const pingResponse = new Notification("", "ping", null);
 @UseGuards(SseJwtAuthGuard)
 export class NotificationsController {
     private readonly _heartbeat$: Observable<Notification>;
+    private readonly _connectedUsers: Set<number> = new Set();
 
     constructor(
         @Inject(NotificationsService)
