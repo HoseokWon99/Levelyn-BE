@@ -34,6 +34,7 @@ export class ToDoService {
 
     async getDailyToDoList(dto: GetDailyToDoListDTO): Promise<ToDoDTO[]> {
         const { userId, date } = dto;
+        this._logger.debug(date);
 
         return pipe(
             await this._toDoRepos.findBy({ userId, date: LessThanOrEqual(date) }),
