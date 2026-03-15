@@ -1,4 +1,5 @@
 const fs = require('fs/promises');
+const { Readable } = require("stream");
 const BASE_URL = "http://localhost:3000/api";
 
 async function simpleFetch(url, options = {}) {
@@ -10,6 +11,22 @@ async function simpleFetch(url, options = {}) {
         );
     }
     return res;
+}
+
+class NotificationsChannel {
+    #token;
+    #decoder;
+    #stream;
+
+    constructor(token) {
+        this.#token = token;
+        this.#decoder = new TextDecoder("utf-8");
+    }
+
+    async start() {
+        const res = await simpleFetch(`${BASE_URL}/notifications?token=${token}`);
+        this.#stream = Readable.fromWeb(res.body);
+    }
 }
 
 async function listenNotifications(token) {
@@ -32,7 +49,9 @@ async function listenNotifications(token) {
     }
 }
 
+async function getNotificationsStream(token) {
 
+}
 
 async function loop(token) {
     await simpleFetch(`${BASE_URL}/to-do`, {

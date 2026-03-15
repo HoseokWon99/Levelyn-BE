@@ -80,7 +80,7 @@ export class NotificationsService {
                 this._logger.error(`XREAD error: ${err.message}`, err.stack);
             }
             finally {
-                await new Promise(resolve => setTimeout(resolve, this._loopDelay));
+                //await new Promise(resolve => setTimeout(resolve, this._loopDelay));
             }
         }
     }

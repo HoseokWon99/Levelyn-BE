@@ -76,3 +76,4 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # k6 generated tokens
 script/tokens.json
+/.claude/resume.md
